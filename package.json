@@ -1,8 +1,13 @@
 {
   "name": "code-file-to-text",
-  "displayName": "Code File To Text",
+  "publisher": "MaoJiu",
+  "displayName": "Code File To Text File",
   "description": "Transform the source code within the project into TXT text files, with each file containing a maximum of 1000 lines. Additionally, automate the process to eliminate comments and blank lines from these files.",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maojiu-bb/code-to-text"
+  },
   "engines": {
     "vscode": "^1.96.0"
   },
@@ -11,11 +16,12 @@
   ],
   "activationEvents": [],
   "main": "./dist/extension.js",
+  "icon": "image/icon.jpg",
   "contributes": {
     "commands": [
       {
-        "command": "code-file-to-text.helloWorld",
-        "title": "Hello World"
+        "command": "code-file-to-text.extractCode",
+        "title": "Code File To Text: Extract Code to TXT Files"
       }
     ]
   },

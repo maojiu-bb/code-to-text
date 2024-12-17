@@ -1,71 +1,115 @@
-# code-file-to-text README
+# Code File to Text Extension
 
-This is the README for your extension "code-file-to-text". After writing up a brief description, we recommend including the following sections.
+## Overview
+
+The Code File to Text extension for VS Code allows you to extract source code files from a selected folder in your workspace, clean them by removing comments and empty lines, and save the cleaned content to separate .txt files. The extension supports a wide range of programming languages and can output the extracted code in manageable parts.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- Extract Code: Allows you to select a folder and extract code files from it.
+- Comment Removal: Removes comments from the code (both single-line and multi-line).
+- Empty Line Removal: Strips out any empty lines from the code.
+- Batch File Processing: Splits large code outputs into multiple .txt files, each with up to 1000 lines.
+- Customizable Output Folder: Choose the name of the folder where the .txt files will be saved.
+- Multi-language Support: Supports a variety of languages including JavaScript, Dart, Python, Java, C++, Go, and more.
 
-For example if there is an image subfolder under your extension project workspace:
+## Installation
 
-\!\[feature X\]\(images/feature-x.png\)
+1. Open VS Code.
+2. Navigate to the Extensions view by clicking on the Extensions icon in the Activity Bar on the side of the window.
+3. Search for Code File to Text and click Install.
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+## Usage
 
-## Requirements
+### Step 1: Activate the Command
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+To start the extraction process, use the Code File to Text: Extract Code command. You can activate it via the Command Palette:
 
-## Extension Settings
+- Press Cmd+Shift+P (Mac) or Ctrl+Shift+P (Windows/Linux).
+- Search for Extract Code and select the command.
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+![command]('./image/command.png')
 
-For example:
+### Step 2: Select the Folder
 
-This extension contributes the following settings:
+A dialog will appear asking you to select a folder containing the code you want to extract.
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+![command]('./image/selectedFolder.png')
 
-## Known Issues
+### Step 3: Choose Output Folder Name
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+Next, you’ll be prompted to enter the name of the output folder where the extracted .txt files will be saved. The default is output.
 
-## Release Notes
+![command]('./image/outputFolder.png')
 
-Users appreciate release notes as you update your extension.
+### Step 4: Extraction Process
 
-### 1.0.0
+The extension will scan the selected folder for supported code files, remove comments and empty lines, and write the cleaned code into separate .txt files in the specified output folder.
 
-Initial release of ...
+### Step 5: Completion
 
-### 1.0.1
+Once the extraction process is complete, a notification will inform you that the code has been successfully extracted.
 
-Fixed issue #.
+![command]('./image/output.png')
 
-### 1.1.0
+## Supported File Extensions
 
-Added features X, Y, and Z.
+The following file extensions are supported by this extension:
 
----
+- JavaScript: .js, .jsx, .ts, .tsx
+- Python: .py
+- Java: .java
+- C/C++: .c, .cpp, .h, .cc
+- Go: .go
+- Ruby: .rb
+- PHP: .php
+- Swift: .swift
+- Kotlin: .kt, .kts
+- HTML/CSS: .html, .css, .scss, .vue
+- SQL: .sql
+- XML: .xml
+- Others: .dart, .lua, .r, .scala, .ex, .exs
 
-## Following extension guidelines
+## How It Works
 
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
+### Comment Removal Logic
 
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
+The extension works by stripping out comments from source code. Here is a summary of how it handles comments:
 
-## Working with Markdown
+- Single-line Comments:
+  - JavaScript, TypeScript, Dart, Go, Java, C, C++, etc. comments starting with // are removed.
+  - Python, Shell scripts, and others starting with # are also removed.
+- Block Comments:
+  - Multi-line block comments (e.g., /_ ... _/) are removed in supported languages such as JavaScript, Java, and others.
+- HTML/XML Comments:
+  - Comments within HTML and XML files, starting with <!-- and ending with -->, are also stripped out.
 
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
+### Empty Line Removal
 
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
+The extension removes any blank or empty lines in the code, ensuring that the output is concise and free of unnecessary spacing.
 
-## For more information
+## Limitations
 
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+- The extension only processes files with supported extensions. Files with other extensions will be ignored.
+- Multi-line block comments that are not properly closed may cause issues during processing.
+- The extraction process splits large files into chunks of 1000 lines. If the code exceeds this number, multiple .txt files will be created.
 
-**Enjoy!**
+## Contributing
+
+We welcome contributions to improve this extension! To contribute:
+
+1. Fork the repository.
+2. Clone your fork to your local machine.
+3. Make changes and commit them.
+4. Open a pull request.
+
+## License
+
+This extension is open-source and available under the MIT License. See the [LICENSE](https://github.com/maojiu-bb/code-file-to-text/LICENSE) file for more details.
+
+## Contact
+
+If you have any questions or feedback, feel free to contact us at:
+
+- Email: maojiu.king@gmail.com
+- GitHub: https://github.com/maojiu-bb/code-file-to-text
