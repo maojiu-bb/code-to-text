@@ -18,3 +18,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 - Fixed issues with incorrect handling of multi-line block comments.
 - Ensured proper handling of empty lines and comments across different file types.
+
+## [1.0.0] - 2024-12-17
+
+### Fixed
+
+- Fixed issues with line comment removed fail.
