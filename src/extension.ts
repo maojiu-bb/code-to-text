@@ -106,40 +106,54 @@ function removeCommentsAndEmptyLines(content: string, filePath: string): string 
   const ext = path.extname(filePath).toLowerCase()
   const lines = content.split('\n')
 
-  const cleanedLines = lines.filter(line => {
-    const trimmed = line.trim()
+  const cleanedLines: string[] = []
 
-    if (!trimmed) {
-      return false // Skip empty lines
+  // Track if we're inside a block comment
+  let inBlockComment = false
+
+  for (let line of lines) {
+    const trimmedLine = line.trim()
+
+    // Skip completely empty lines
+    if (!trimmedLine) {
+      continue
     }
 
-    let cleanedLine = line
+    // Save the original indentation
+    const indentation = line.substring(0, line.length - trimmedLine.length)
 
-    // Remove single-line comments based on the language
-    const singleLineCommentIndex = getSingleLineCommentStartIndex(ext, trimmed)
+    // Handle block comments (/* ... */) and remove them
+    if (inBlockComment) {
+      if (trimmedLine.includes('*/')) {
+        inBlockComment = false
+      }
+      continue // Skip the entire block comment line
+    }
+
+    // Handle block comment start (/*)
+    if (trimmedLine.includes('/*')) {
+      inBlockComment = true
+      // Remove block comment from the line, leaving content before it
+      line = indentation + line.split('/*')[0].trim()
+    }
+
+    // Remove single-line comments based on the file type (also handles line-end comments)
+    const singleLineCommentIndex = getSingleLineCommentStartIndex(ext, trimmedLine)
     if (singleLineCommentIndex !== -1) {
-      cleanedLine = cleanedLine.substring(0, singleLineCommentIndex).trim() // Keep content before comment
+      line = indentation + line.substring(0, singleLineCommentIndex).trim() // Remove comment part
     }
 
-    // Remove block comments (/*...*/)
-    const blockCommentStartIndex = cleanedLine.indexOf('/*')
-    const blockCommentEndIndex = cleanedLine.indexOf('*/')
-    if (blockCommentStartIndex !== -1 && blockCommentEndIndex !== -1) {
-      cleanedLine = cleanedLine.substring(0, blockCommentStartIndex).trim()
+    // After trimming comments, if the line is not empty, add it to the result
+    const trimmedCleanedLine = line.trim()
+    if (trimmedCleanedLine) {
+      cleanedLines.push(line) // Push the line with its original indentation
     }
-
-    const trimmedCleanedLine = cleanedLine.trim()
-    if (!trimmedCleanedLine) {
-      return false // Skip if nothing remains after cleaning
-    }
-
-    return true // Include non-empty, non-comment lines
-  })
+  }
 
   return cleanedLines.join('\n')
 }
 
-// Helper function to get single-line comment start index based on the language extension
+// Helper function to detect single-line comment start position
 function getSingleLineCommentStartIndex(ext: string, line: string): number {
   switch (ext) {
     case '.js':

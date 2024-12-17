@@ -3,7 +3,7 @@
   "publisher": "MaoJiu",
   "displayName": "Code File To Text File",
   "description": "Transform the source code within the project into TXT text files, with each file containing a maximum of 1000 lines. Additionally, automate the process to eliminate comments and blank lines from these files.",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "repository": {
     "type": "git",
     "url": "https://github.com/maojiu-bb/code-to-text"

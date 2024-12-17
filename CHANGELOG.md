@@ -24,3 +24,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Fixed
 
 - Fixed issues with line comment removed fail.
+
+## [1.0.4] - 2024-12-17
+
+### Fixed
+
+- Fixed issues with line comment removed.
