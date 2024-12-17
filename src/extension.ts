@@ -110,84 +110,73 @@ function removeCommentsAndEmptyLines(content: string, filePath: string): string 
     const trimmed = line.trim()
 
     if (!trimmed) {
-      return false
+      return false // Skip empty lines
     }
 
     let cleanedLine = line
 
-    const singleLineCommentIndex = cleanedLine.indexOf('//')
+    // Remove single-line comments based on the language
+    const singleLineCommentIndex = getSingleLineCommentStartIndex(ext, trimmed)
+    if (singleLineCommentIndex !== -1) {
+      cleanedLine = cleanedLine.substring(0, singleLineCommentIndex).trim() // Keep content before comment
+    }
+
+    // Remove block comments (/*...*/)
     const blockCommentStartIndex = cleanedLine.indexOf('/*')
     const blockCommentEndIndex = cleanedLine.indexOf('*/')
-
-    if (singleLineCommentIndex !== -1) {
-      cleanedLine = cleanedLine.substring(0, singleLineCommentIndex).trim()
-    } else if (blockCommentStartIndex !== -1 && blockCommentEndIndex !== -1) {
+    if (blockCommentStartIndex !== -1 && blockCommentEndIndex !== -1) {
       cleanedLine = cleanedLine.substring(0, blockCommentStartIndex).trim()
     }
 
     const trimmedCleanedLine = cleanedLine.trim()
     if (!trimmedCleanedLine) {
-      return false
+      return false // Skip if nothing remains after cleaning
     }
 
-    switch (ext) {
-      case '.js':
-      case '.dart':
-      case '.jsx':
-      case '.ts':
-      case '.tsx':
-      case '.java':
-      case '.c':
-      case '.cpp':
-      case '.cs':
-      case '.go':
-      case '.php':
-      case '.rb':
-      case '.swift':
-      case '.kt':
-      case '.kts':
-      case '.scala':
-      case '.lua':
-      case '.erl':
-      case '.ex':
-      case '.exs':
-        if (trimmedCleanedLine.startsWith('/*') || trimmedCleanedLine.endsWith('*/')) {
-          return false
-        }
-        break
-      case '.py':
-      case '.sh':
-      case '.bat':
-      case '.r':
-      case '.pl':
-        if (trimmedCleanedLine.startsWith('#')) {
-          return false
-        }
-        break
-      case '.html':
-      case '.css':
-      case '.scss':
-      case '.vue':
-        if (trimmedCleanedLine.startsWith('<!--') || trimmedCleanedLine.startsWith('/*') || trimmedCleanedLine.endsWith('-->') || trimmedCleanedLine.endsWith('*/')) {
-          return false
-        }
-        break
-      case '.sql':
-        if (trimmedCleanedLine.startsWith('--')) {
-          return false
-        }
-        break
-      case '.xml':
-        if (trimmedCleanedLine.startsWith('<!--') || trimmedCleanedLine.endsWith('-->')) {
-          return false
-        }
-        break
-      default:
-        break
-    }
-
-    return true
+    return true // Include non-empty, non-comment lines
   })
 
   return cleanedLines.join('\n')
+}
+
+// Helper function to get single-line comment start index based on the language extension
+function getSingleLineCommentStartIndex(ext: string, line: string): number {
+  switch (ext) {
+    case '.js':
+    case '.dart':
+    case '.jsx':
+    case '.ts':
+    case '.tsx':
+    case '.java':
+    case '.c':
+    case '.cpp':
+    case '.cs':
+    case '.go':
+    case '.php':
+    case '.rb':
+    case '.swift':
+    case '.kt':
+    case '.kts':
+    case '.scala':
+    case '.lua':
+    case '.erl':
+    case '.ex':
+    case '.exs':
+      return line.indexOf('//') // JavaScript, Dart, Java, C++, Go, PHP, Ruby, etc.
+    case '.py':
+    case '.sh':
+    case '.bat':
+    case '.r':
+    case '.pl':
+      return line.indexOf('#') // Python, Shell, Batch, R, Perl
+    case '.sql':
+      return line.indexOf('--') // SQL
+    case '.html':
+    case '.css':
+    case '.scss':
+    case '.vue':
+      return line.indexOf('<!--') // HTML, CSS, Vue
+    default:
+      return -1 // No comment syntax for the language
+  }
 }
