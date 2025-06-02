@@ -28,19 +28,19 @@ To start the extraction process, use the Code File to Text: Extract Code command
 - Press Cmd+Shift+P (Mac) or Ctrl+Shift+P (Windows/Linux).
 - Search for Extract Code and select the command.
 
-![command]('./image/command.png')
+![command]('https://github.com/maojiu-bb/code-to-text/blob/main/image/command.png?raw=true')
 
 ### Step 2: Select the Folder
 
 A dialog will appear asking you to select a folder containing the code you want to extract.
 
-![command]('./image/selectedFolder.png')
+![command]('https://github.com/maojiu-bb/code-to-text/blob/main/image/selectedFolder.png?raw=true')
 
 ### Step 3: Choose Output Folder Name
 
 Next, you’ll be prompted to enter the name of the output folder where the extracted .txt files will be saved. The default is output.
 
-![command]('./image/outputFolder.png')
+![command]('https://github.com/maojiu-bb/code-to-text/blob/main/image/outputFolder.png?raw=true')
 
 ### Step 4: Extraction Process
 
@@ -50,7 +50,7 @@ The extension will scan the selected folder for supported code files, remove com
 
 Once the extraction process is complete, a notification will inform you that the code has been successfully extracted.
 
-![command]('./image/output.png')
+![command]('https://github.com/maojiu-bb/code-to-text/blob/main/image/output.png?raw=true')
 
 ## Supported File Extensions
 
